@@ -11,6 +11,7 @@
   "dependencies": {
     "axios": "^0.15.3",
     "bulma": "^0.2.3",
+    "date-format": "^1.0.0",
     "vue": "^2.1.0",
     "vue-axios": "^1.2.2"
   },

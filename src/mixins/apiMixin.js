@@ -4,10 +4,10 @@ const api = new OpenWeatherApi();
 
 export default {
   methods: {
-     weatherFor : function(name) {
+     urlWeatherFor : function(name) {
          return api.weatherFor(name);
      },
-     foreCastFor (name) {
+     urlForeCastFor (name) {
        return api.foreCastFor(name);
      }
   }
