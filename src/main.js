@@ -16,3 +16,14 @@ new Vue({
   render: h => h(App)
 })
 
+function containsObjProperty(obj, prop, list){
+  var i;
+  for (i = 0; i < list.length; i++) {
+      if (list[i][prop] === obj[prop]) {
+          return true;
+      }
+  }
+
+  return false;
+}
+Array.prototype.containsObjProperty = containsObjProperty;

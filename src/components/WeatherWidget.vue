@@ -17,8 +17,18 @@
         </weather-card>
         <hr>
         <div class="heading">
-          <h1 class="title">5 days forecast for : {{ location }}</h1>
+            <h1 class="title">5 days forecast for : {{ location }}</h1>
         </div>
+        <h2 class="subtitle has-text-centered">Filter by date</h2>
+            <div class="tabs is-centered is-medium">
+                <ul>
+                    <span v-for="(date,index) in foreCastDates">
+                        <li :class="{ 'is-active': date.isActive }">
+                            <a href="#" @click.prevent="filterByDate(index)">{{ date.date }}</a>
+                        </li>
+                    </span>
+                </ul>
+            </div>
         <weather-card v-for="weatherItem in foreCastListByDate" :fore-cast="true" :fore-cast-date="weatherItem.dt_txt">
             <i slot="icon" :class="icon"></i>
             <span slot="main">{{ weatherItem.weather[0].main }}</span>
@@ -67,7 +77,8 @@ export default {
             sys : {},
             wind : {},
             foreCast : {},
-            foreCastListByDate : []
+            foreCastListByDate : [],
+            foreCastDates: []
         }
     },
     methods : {
@@ -77,10 +88,20 @@ export default {
                 foreCasts.forEach((data) =>{
                     let date = dateFormat('dd/MM/yyyy',new Date(data.dt_txt));
                     data['date'] = date;
+                    let foreCastDate = {date, isActive : false};
+                    if(!foreCasts.containsObjProperty(foreCastDate, 'date', this.foreCastDates)){
+                        this.foreCastDates.push(foreCastDate);
+                    }
                 })
                 return foreCasts;
             }
             return [];
+        },
+        filterByDate(index){
+            for(let i =0;i < this.foreCastDates.length; i++){
+                this.foreCastDates[i].isActive = false;
+            }
+            this.foreCastDates[index].isActive = true;
         }
     },
     computed : {
