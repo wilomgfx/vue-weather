@@ -3,7 +3,10 @@
     <header-nav></header-nav>
     <section class="section">
       <div class="container">
-        <weather-widget :location="location"></weather-widget>
+        <weather-widget :location="location" v-if="location"></weather-widget>
+        <div v-else>
+          <p>Search for a location...</p>
+        </div>
       </div>
     </section>
   </div>

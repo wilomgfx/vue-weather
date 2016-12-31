@@ -30,6 +30,10 @@
                         <a class="button is-info is-medium" @click="getWeatherForCity">
                             Search
                         </a>
+                        <a class="button is-warning is-medium" @click="locateMe">
+                            <i class="icon is-medium fa fa-location-arrow" aria-hidden="true"></i>
+                            Find me
+                        </a>
                     </p>
                 </div>
             </div>
@@ -70,6 +74,32 @@ export default {
                 .catch((error) => {
                     console.log(error);
                 });
+        },
+        locateMe(){
+            const options = {
+                enableHighAccuracy: true,
+                timeout: 5000,
+                maximumAge: 0
+            };
+           let error = function error(err) {
+                console.warn(`ERROR(${err.code}): ${err.message}`);
+            };
+
+            navigator.geolocation.getCurrentPosition((pos) =>
+            {
+                 let { latitude , longitude } = pos.coords;
+
+                this.axios.get(this.urlWeatherForByGeoLocation(latitude, longitude))
+                .then((response) => {
+                    this.city = response.data.name;
+                    this.bus.$emit('search-location', this.city);
+                    this.bus.$emit('weather-found', response.data);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            }
+            , error, options);
         }
     }
 }

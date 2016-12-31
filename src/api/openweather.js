@@ -24,4 +24,11 @@ export default class OpenWeatherApi {
         this.rebuildApiUrl();
         return this.apiUrl;
     }
+
+    weatherForByGeoLocation(lat, lon) {
+        this.query = `lat=${lat}&lon=${lon}`;
+        this.api = 'weather';
+        this.rebuildApiUrl();
+        return this.apiUrl;
+    }
 }

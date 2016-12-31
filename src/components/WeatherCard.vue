@@ -13,7 +13,10 @@
                         <span><slot name="description"></slot></span>
                     </p>
                 </div>
-                <h2 class="title is-2 has-text-centered" v-show="foreCast">{{ foreCastTimeOfDay }}</h2>
+                <h2 class="title is-2 has-text-centered" v-show="foreCast">
+                    <span class="icon is-medium"><i class="fa fa-clock-o"></i></span>
+                    <span>{{ foreCastTimeOfDay }}</span>
+                </h2>
                 <div class="level">
                         <div class="level-item has-text-centered">
                             <p class="heading"><span v-show="!foreCast">Current</span> Temperature</p>

@@ -20,11 +20,14 @@
             <h1 class="title">5 days forecast for : {{ location }}</h1>
         </div>
         <h2 class="subtitle has-text-centered">Filter by date</h2>
-        <div class="tabs is-centered is-medium">
+        <div class="tabs is-centered is-medium is-toggle">
             <ul>
                 <span v-for="(date,index) in foreCastDates">
                     <li :class="{ 'is-active': date.isActive }">
-                        <a href="#" @click.prevent="filterByDate(index)">{{ date.date }}</a>
+                        <a href="#" @click.prevent="filterByDate(index)">
+                            <span class="icon is-small"><i class="fa fa-calendar-o"></i></span>
+                            <span>{{ date.date }}</span>
+                        </a>
                     </li>
                 </span>
             </ul>

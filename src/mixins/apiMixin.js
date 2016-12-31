@@ -9,6 +9,9 @@ export default {
      },
      urlForeCastFor (name) {
        return api.foreCastFor(name);
+     },
+     urlWeatherForByGeoLocation(lat, long){
+       return api.weatherForByGeoLocation(lat, long);
      }
   }
 }
