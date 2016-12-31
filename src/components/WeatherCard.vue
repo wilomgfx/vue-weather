@@ -1,6 +1,5 @@
 <template>
     <div class="weather__card">
-        <h2 class="title is-2 has-text-centered" v-show="foreCast">{{ foreCastDateTime }}</h2>
         <div class="box">
             <article class="media">
                 <div class="media-left">

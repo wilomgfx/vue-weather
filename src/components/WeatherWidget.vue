@@ -20,27 +20,29 @@
             <h1 class="title">5 days forecast for : {{ location }}</h1>
         </div>
         <h2 class="subtitle has-text-centered">Filter by date</h2>
-            <div class="tabs is-centered is-medium">
-                <ul>
-                    <span v-for="(date,index) in foreCastDates">
-                        <li :class="{ 'is-active': date.isActive }">
-                            <a href="#" @click.prevent="filterByDate(index)">{{ date.date }}</a>
-                        </li>
-                    </span>
-                </ul>
-            </div>
-        <weather-card v-for="weatherItem in foreCastListByDate" :fore-cast="true" :fore-cast-date="weatherItem.dt_txt">
-            <i slot="icon" :class="icon"></i>
-            <span slot="main">{{ weatherItem.weather[0].main }}</span>
-            <span slot="description">{{ weatherItem.weather[0].description }}</span>
-            <span slot="curr_temp">{{ weatherItem.main.temp }}</span>
-            <span slot="min_temp">{{ weatherItem.main.temp_min }}</span>
-            <span slot="max_temp">{{ weatherItem.main.temp_max }}</span>
-            <span slot="humidity">{{ weatherItem.main.humidity }}</span>
-            <span slot="pressure">{{ weatherItem.main.pressure }}</span>
-            <span slot="wind_speed">{{ weatherItem.wind.speed }}</span>
-            <span slot="wind_deg">{{ weatherItem.wind.deg }}</span>
-        </weather-card>
+        <div class="tabs is-centered is-medium">
+            <ul>
+                <span v-for="(date,index) in foreCastDates">
+                    <li :class="{ 'is-active': date.isActive }">
+                        <a href="#" @click.prevent="filterByDate(index)">{{ date.date }}</a>
+                    </li>
+                </span>
+            </ul>
+        </div>
+        <div v-for="(weatherItem, index) in foreCastListByDate">
+            <weather-card :fore-cast="true" :fore-cast-date="weatherItem.dt_txt" v-show="selectedDate == weatherItem.date">
+                <i slot="icon" :class="icon"></i>
+                <span slot="main">{{ weatherItem.weather[0].main }}</span>
+                <span slot="description">{{ weatherItem.weather[0].description }}</span>
+                <span slot="curr_temp">{{ weatherItem.main.temp }}</span>
+                <span slot="min_temp">{{ weatherItem.main.temp_min }}</span>
+                <span slot="max_temp">{{ weatherItem.main.temp_max }}</span>
+                <span slot="humidity">{{ weatherItem.main.humidity }}</span>
+                <span slot="pressure">{{ weatherItem.main.pressure }}</span>
+                <span slot="wind_speed">{{ weatherItem.wind.speed }}</span>
+                <span slot="wind_deg">{{ weatherItem.wind.deg }}</span>
+            </weather-card>
+        </div>
     </div>
 </template>
 
@@ -59,6 +61,8 @@ export default {
             let foreCastData = data;
             this.foreCast = foreCastData;
             this.foreCastListByDate = this.foreCastsByDate();
+            this.selectedDate = this.foreCastListByDate[0].date;
+            this.foreCastDates[0].isActive = true;
         });
 
         this.bus.$on('weather-found', (data) =>
@@ -78,7 +82,8 @@ export default {
             wind : {},
             foreCast : {},
             foreCastListByDate : [],
-            foreCastDates: []
+            foreCastDates: [],
+            selectedDate : ''
         }
     },
     methods : {
@@ -101,7 +106,9 @@ export default {
             for(let i =0;i < this.foreCastDates.length; i++){
                 this.foreCastDates[i].isActive = false;
             }
+            this.selectedDate = '';
             this.foreCastDates[index].isActive = true;
+            this.selectedDate = this.foreCastDates[index].date;
         }
     },
     computed : {
